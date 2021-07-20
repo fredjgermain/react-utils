@@ -2,6 +2,9 @@
   "compilerOptions": { 
     "module": "commonjs", 
     "target": "es6",
+    "lib": [ 
+      "es2019" 
+    ], 
     "declaration": true, 
     "outDir": "./lib", 
 
@@ -12,7 +15,7 @@
     "src/**/*"
   ], 
   "exclude": [
-    "src/stories/*", 
+    "src/utils/stories/*", 
     "src/**/*.stories.tsx"
   ]
 }
