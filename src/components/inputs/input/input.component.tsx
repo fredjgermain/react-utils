@@ -1,9 +1,8 @@
 import React from 'react'; 
 
 // --------------------------------------------------------
-import { GetDefaultValueByType, GetTypeByValue, IsNull } from '../../../utils/value_type.utils'; 
-import { DefaultWidth, IEvent, GetValueFromInput, OnEnter, GetInputType } from '../../../utils/htmlelement.utils';
-
+import { GetDefaultValueByType, GetTypeByValue, GetValueFromInput, GetInputType, 
+  OnEnter, IsNull, DefaultWidth, IEvent } from '../../../utils'; 
 
 
 export interface IInput { 
@@ -59,7 +58,7 @@ function PrepArgs({...props}:IInput) {
 
   // Tab Function called on KeyDown. 
   //const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => OnTab(event, props.onPressEnter); 
-  const onBlur = () => props.onPressEnter && props.onPressEnter(); 
+  const onBlur = () => props.onPressTab && props.onPressTab(); 
   // Enter Function called on KeyUp. 
   const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => OnEnter(event, props.onPressEnter); 
 

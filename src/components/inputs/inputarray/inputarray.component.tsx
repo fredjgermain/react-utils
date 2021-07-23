@@ -11,7 +11,7 @@ import { DefaultWidth, IEvent, GetValueFromInput, OnEnter, GetInputType } from '
 
 
 
-export const InputArrayContext = React.createContext({} as IUseInputArray); 
+const InputArrayContext = React.createContext({} as IUseInputArray); 
 export function InputArray({...props}:IInput) { 
   const context = useInputArray(props); 
 
@@ -33,12 +33,13 @@ function CreateElement() {
   const [value, setValue] = useState(elementArgs.value); 
   elementArgs.value = value; 
   elementArgs.onSetValue = (newValue:any) => setValue(newValue); 
+  elementArgs.onPressTab = () => {} 
   elementArgs.onPressEnter = () => { 
     Create(value); 
     setValue((elementArgs.type as IType).defaultValue); // reset input to defaultValue after creation. 
   }; 
   
-  return <Input {...elementArgs}  /> 
+  return <Input {...elementArgs} /> 
 } 
 
 // Update element =======================================
@@ -48,13 +49,14 @@ function UpdateElement({index}:{index:number}) {
   const [value, setValue] = useState(elementArgs.value); 
   elementArgs.value = value; 
   elementArgs.onSetValue = (newValue:any) => setValue(newValue); 
+  elementArgs.onPressTab = () => Update(index, value); 
   elementArgs.onPressEnter = () => Update(index, value); 
   
   useEffect(() => { 
     setValue(elementArgs.value); 
   }, [JSON.stringify(elementArgs.value)]); 
 
-  return <Input {...elementArgs}  /> 
+  return <Input {...elementArgs} /> 
 }
 
 // Delete Btn ===================================

@@ -1,3 +1,9 @@
+/**
+ * 
+ */
+interface Indexer { 
+  [key:string]:boolean|Indexer 
+} 
 
 /** ITYPE 
  * 

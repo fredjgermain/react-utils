@@ -145,14 +145,42 @@ export function IsInRange(value:number, min?:number, max?:number) {
 } 
 
 
-type GetIndexer = {[key:string]:boolean|GetIndexer}; 
+
+/** GetValueAt ============================================
+ * Get a single nested value form an object by listing the nested keys. 
+ * @param source 
+ * @param at 
+ * @returns 
+ */
+export function GetValueAt(source:any, at:string[]) { 
+  const [key, ...rest] = at; 
+  if(IsEmpty(key) || !(key in source)) 
+    return; 
+  if(IsEmpty(rest)) 
+    return source[key]; 
+  return GetValueAt(source[key], rest); 
+} 
+
+
+
+/*
+export function SetValueAt(source:any, at:string[], newValue:any) { 
+  const [key, ...rest] = at; 
+  if(IsEmpty(key) || !(key in source)) 
+    return; 
+  if(IsEmpty(rest)) 
+    return source[key] = newValue; 
+}
+*/
+
+
 /** GetValuesAt ===========================================
  * 
  * @param source 
  * @param indexer 
  * @returns 
  */
-export function GetValuesAt(source:any, indexer:GetIndexer) { 
+export function GetValuesAt(source:any, indexer:Indexer) { 
   let result = {} as any; 
   Object.keys(indexer).forEach( key => { 
     if(indexer[key] === true) 
@@ -160,7 +188,7 @@ export function GetValuesAt(source:any, indexer:GetIndexer) {
     /*if(typeof indexer[key] === 'function') 
       result[key] = (indexer[key] as Function)(source[key]); */
     if(typeof indexer[key] === 'object') 
-      result[key] = GetValuesAt(source[key], indexer[key] as GetIndexer); 
+      result[key] = GetValuesAt(source[key], indexer[key] as Indexer); 
   }) 
   return result; 
 } 

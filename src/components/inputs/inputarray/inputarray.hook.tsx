@@ -1,8 +1,6 @@
 // --------------------------------------------------------
 import { IInput } from '../input/input.component'; 
-import { GetDefaultValueByType, GetTypeByValue, IsNull } from '../../../utils/value_type.utils'; 
-import { DefaultWidth, IEvent, GetValueFromInput, OnEnter, GetInputType } from '../../../utils/htmlelement.utils';
-
+import { GetDefaultValueByType, GetTypeByValue, IsNull, GetInputType } from '../../../utils'; 
 
 
 
