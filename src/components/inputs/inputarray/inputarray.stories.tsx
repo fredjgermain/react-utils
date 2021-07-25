@@ -19,7 +19,7 @@ function TestInput({...props}:IInput) {
 
 
 export default { 
-  title: 'Input/ArrayInput', 
+  title: 'Input/InputArray', 
   component: TestInput, 
 } 
 

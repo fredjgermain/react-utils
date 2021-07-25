@@ -21,9 +21,11 @@ function TestInput() {
 
   const {sortedValues, sorter, SetSorter, ResetSorter} = useSorter(toSort); 
 
-  const sortByA = (sort) => SetSorter({a:sort}) 
-  const sortByB = (sort) => SetSorter({b:sort}) 
-  const sortByC = (sort) => SetSorter({c:sort}) 
+  const SortBy = (key:string, sortDirection:any) => { 
+    let sorterObj = ({} as any) 
+    sorterObj[key] = sortDirection; 
+    SetSorter(sorterObj); 
+  }; 
 
   return <div> 
     {JSON.stringify(sorter)} <br/> 
@@ -33,9 +35,9 @@ function TestInput() {
       </div> 
     })} 
     <button onClick={ResetSorter} >Reset</button> 
-    <InputSorter {...{onSort:sortByA}} /> 
-    <InputSorter {...{onSort:sortByB}} /> 
-    <InputSorter {...{onSort:sortByC}} /> 
+    <InputSorter {...{onSort:(sort) => SortBy('a', sort)}} /> 
+    <InputSorter {...{onSort:(sort) => SortBy('b', sort)}} /> 
+    <InputSorter {...{onSort:(sort) => SortBy('c', sort)}} /> 
   </div> 
 } 
 

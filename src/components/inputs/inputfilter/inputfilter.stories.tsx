@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import { Story } from '@storybook/react'; 
 
 // --------------------------------------------------------
-import { useFilter } from './inputfilter.component'; 
+import { InputFilter } from './inputfilter.component'; 
+import { useFilter } from './inputfilter.hook'; 
+import { FilterPredicate } from './inputfilter.utils'; 
 
 
 // assumes a 1 lvl object like {key1:orderValue, key2:orderValue ... etc}
@@ -20,15 +22,19 @@ function TestInput() {
   ] 
 
   const {filteredValues, filterObj, SetFilterObj, ResetFilter} = useFilter(toSort); 
-  console.log('test');
   function SetFilters(filters:any) { 
     SetFilterObj({...filterObj, ...filters}) 
   } 
 
+  const filterBy = (strPredicate:string, type:string, key:string) => { 
+    let filters = ({} as any) 
+    filters[key] = {type, strPredicate}; 
+    SetFilterObj({...filterObj, ...filters}) 
+  }
 
   return <div> 
     {Object.keys(filterObj).map( key => { 
-      return <span key={key}>{key}</span> 
+      return <span key={key}>{JSON.stringify(filterObj[key])}</span> 
     })} <br/> 
     {filteredValues.map( (value, i) => { 
       return <div key={i}> 
@@ -36,10 +42,16 @@ function TestInput() {
       </div> 
     })} 
     <button onClick={ResetFilter} >Reset</button> 
-    <button onClick={() => SetFilters({a:(v:any) => v.a === 'a'}) } >Filter by a === 'a'</button> 
-    <button onClick={() => SetFilters({b:(v:any) => v.b % 2 === 0})} >Filter by b is even</button> 
+    <InputFilter {...{type:'string', onFilter:(strPredicate) => filterBy(strPredicate, 'string', 'a')}} /> 
+    <InputFilter {...{type:'number', onFilter:(strPredicate) => filterBy(strPredicate, 'number', 'b')}} /> 
+    <InputFilter {...{type:'number', onFilter:(strPredicate) => filterBy(strPredicate, 'number', 'c')}} /> 
   </div> 
 } 
+
+/**
+ * <button onClick={() => SetFilters({a:(v:any) => v.a === 'a'}) } >Filter by a === 'a'</button> 
+    <button onClick={() => SetFilters({b:(v:any) => v.b % 2 === 0})} >Filter by b is even</button> 
+ */
 
 export default { 
   title: 'Input/InputFilter', 
