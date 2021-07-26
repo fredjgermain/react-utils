@@ -1,8 +1,8 @@
-import React, {useState} from 'react'; 
+import React from 'react'; 
 import { Story } from '@storybook/react'; 
 
 // --------------------------------------------------------
-import { useSorter, InputSorter } from './inputsorter.component'; 
+import { useSorter, InputSorter } from './_inputsorter'; 
 
 
 // assumes a 1 lvl object like {key1:orderValue, key2:orderValue ... etc}

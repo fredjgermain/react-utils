@@ -3,8 +3,7 @@ import { Story } from '@storybook/react';
 
 // --------------------------------------------------------
 //import { InputFilter, useFilter, Input } from '../../../inputs'; 
-import { InputSelect } from './_inputselect'; 
-import { IInputSelect } from './inputselect.type'; 
+import { InputSelect, IInputSelect } from './_inputselect'; 
 
 
 function TestInputSelect({...props}:IInputSelect) { 

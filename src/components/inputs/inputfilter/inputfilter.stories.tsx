@@ -2,9 +2,7 @@ import React, {useState} from 'react';
 import { Story } from '@storybook/react'; 
 
 // --------------------------------------------------------
-import { InputFilter } from './inputfilter.component'; 
-import { useFilter } from './inputfilter.hook'; 
-import { FilterPredicate } from './inputfilter.utils'; 
+import { InputFilter, useFilter } from './_inputfilter'; 
 
 
 // assumes a 1 lvl object like {key1:orderValue, key2:orderValue ... etc}

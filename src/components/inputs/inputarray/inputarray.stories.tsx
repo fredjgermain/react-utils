@@ -3,7 +3,7 @@ import { Story } from '@storybook/react';
 
 // -------------------------------------------------------- 
 import { IInput } from '../input/_input'; 
-import { InputArray } from './inputarray.component'; 
+import { InputArray } from './_inputarray'; 
 
 
 function TestInput({...props}:IInput) { 
