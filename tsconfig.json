@@ -13,7 +13,7 @@
   },
   "include": [
     "src/**/*"
-  ], 
+, "types.d.ts"  ], 
   "exclude": [
     "src/utils/stories/*", 
     "src/**/*.stories.tsx"
