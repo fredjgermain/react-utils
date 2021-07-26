@@ -9,5 +9,5 @@ export function AbbrevArray({toAbbrev, maxLength = 20}:{toAbbrev:string[], maxLe
   const ifLong = reducable.length < toAbbrev.length ? ', ...': ''; 
   const nSelected = ` (${toAbbrev.length}) `; 
 
-  return <span title={full}>{nSelected + reduced + ifLong}</span>; 
+  return <div title={full}>{nSelected + reduced + ifLong}</div>; 
 }

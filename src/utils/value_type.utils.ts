@@ -1,3 +1,5 @@
+import { type } from "os";
+
 /** IsNull ======================================
  * returns true if value is:
   - undefined

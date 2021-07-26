@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; 
 
 // --------------------------------------------------------
-import { Filter, ToArray, Pick, IsEmpty } from '../../../utils'; 
+import { Filter, ToArray, IsEmpty } from '../../../utils'; 
 import { IInputSelect, IUseSelect } from './inputselect.type'; 
 
 // USE SELECT ====================================
@@ -17,11 +17,14 @@ export function useInputSelect({...props}:IInputSelect):IUseSelect {
   props.options = props.options ?? []; 
   props.placeholder = props.placeholder ?? "--- Empty ---"; 
 
-  function GetSelectedValuesFromOptions(value:any, options:IOption[]) { 
-    return Pick(options, ToArray(value), (o,u) => o.value === u); 
-  }
 
-  const selection = GetSelectedValuesFromOptions(props.value, props.options); 
+  function GetSelectedOptions(value:any, options:IOption[]) { 
+    return ToArray(value) 
+      .map( value => options.find( o => o.value === value)) 
+      .filter( value => !IsEmpty(value) ); 
+  } 
+
+  const selection = GetSelectedOptions(props.value, props.options); 
 
   // SelectValue ................................
   function SelectValue (newValue:any) { 
@@ -30,7 +33,7 @@ export function useInputSelect({...props}:IInputSelect):IUseSelect {
       exclusion.push(newValue); 
     if(IsEmpty(inclusion) && !props.multiple) 
       exclusion[0] = newValue; 
-    const selectionFromOptions = GetSelectedValuesFromOptions(exclusion, props.options).map( o => o.value); 
+    const selectionFromOptions = GetSelectedOptions(exclusion, props.options).map( o => o.value); 
     const selection = props.multiple ? selectionFromOptions: selectionFromOptions.shift(); 
     props.onSetValue(selection); 
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Story } from '@storybook/react'; 
 
 // --------------------------------------------------------
-import { IInput, Input } from './input.component'; 
+import { IInput, Input } from './_input'; 
 
 
 function TestInput({...props}:IInput) { 
@@ -39,7 +39,7 @@ TestInput_String_fewArgs.args = {
 
 export const TestInput_String = Template.bind({}) 
 TestInput_String.args = { 
-  type: {name:'string', defaultValue:''}, 
+  type: 'string', 
   value:'a string', 
   placeholder: '3 digits', 
   onSetValue: (newValue:any) => console.log(newValue), 
@@ -49,7 +49,7 @@ TestInput_String.args = {
 
 export const TestInput_Number = Template.bind({}) 
 TestInput_Number.args = { 
-  type: {name:'number', defaultValue:0}, 
+  type: 'number', 
   value: 12, 
   onSetValue: (newValue:any) => console.log(newValue), 
   onPressEnter: () => console.log('on Press Enter'), 
@@ -59,7 +59,7 @@ TestInput_Number.args = {
 
 export const TestInput_Color = Template.bind({}) 
 TestInput_Color.args = { 
-  type: {name:'color', defaultValue:0}, 
+  type: 'color', 
   //inputType: 'color', 
   value: '', 
   onSetValue: (newValue:any) => console.log(newValue), 
@@ -69,7 +69,7 @@ TestInput_Color.args = {
 
 export const TestInput_Bool = Template.bind({}) 
 TestInput_Bool.args = { 
-  type: {name:'boolean', defaultValue:false}, 
+  type: 'boolean', 
   value: false, 
   onSetValue: (newValue:any) => console.log(newValue), 
   onPressEnter: () => console.log('on Press Enter'), 

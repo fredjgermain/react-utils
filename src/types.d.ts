@@ -8,7 +8,7 @@ interface Indexer {
 /** ITYPE 
  * 
  */
-interface IType { 
+/*interface IType { 
   defaultValue: any; 
   name: string; 
   //nestedType?: IType[] | {[key:string]:IType}; 
@@ -17,8 +17,20 @@ interface IType {
   isArray?: boolean; 
   isScalar?: boolean; 
   isObject?: boolean; 
-} 
+} */
 
+
+interface IType { 
+  name: string; 
+  defaultValue: any; 
+  enum?: any[]; 
+  nestedType?: IType | IType[] | { [key:string]:IType[] }; 
+
+  isEnum?: boolean; 
+  isArray?: boolean; 
+  isScalar?: boolean; 
+  isObject?: boolean; 
+} 
 
 
 /** IOPTION

@@ -1,6 +1,7 @@
 import { IsEmpty } from './value_type.utils'; 
 
 
+
 /** PREDICATE =============== 
  * @param t current element.  
  * @param i current index number. 
@@ -11,12 +12,14 @@ import { IsEmpty } from './value_type.utils';
  */
 export type Predicate<T> = (t:T, i:number, a:T[], positive:T[], negative:T[]) => boolean; 
 
+
+
 /** SORTER ================== 
  * @param t current element 
  * @param pivot value to compare to 't' 
  * @return boolean if comparison of 't' and 'pivot' passes or fails. 
  */
-export type Sorter<T> = (t:T, pivot:T) => boolean; 
+export type Comparator<T> = (t:T, pivot:T) => boolean; 
 
 
 
@@ -27,7 +30,7 @@ export type Sorter<T> = (t:T, pivot:T) => boolean;
  * @param Sameness 
  * @returns 
  */
-export function Unic<T>(array:T[], Sameness:Sorter<T>):[T[], T[]] { 
+export function Unic<T>(array:T[], Sameness:Comparator<T>):[T[], T[]] { 
   const isUnic = (t:T, i:number, a:T[], positive:T[]) => !positive.some( p => Sameness(t, p) ); 
   return Filter(array, isUnic); 
 } 
@@ -64,6 +67,25 @@ export function Pick<T, U>(toPickFrom:T[] = [], pickingOrder:U[] = [], picker:(t
 
 
 
+/** ORDER =================================================
+ * 
+ * @param toOrder 
+ * @param orderers 
+ * @returns 
+ */
+export function Order<T>(toOrder:T[] = [], orderers:Predicate<T>[]):[T[], T[]] { 
+  let ordered = []; 
+  let unordered = [...toOrder]; 
+  orderers.forEach( orderer => { 
+    const [filter, unfiltered] = Filter(unordered, orderer); 
+    ordered = [...ordered, ...filter]; 
+    unordered = [...unfiltered]; 
+  }) 
+  return [ordered, unordered]; 
+} 
+
+
+
 /** GROUP =================== 
  * Groups elements using a single predicate. 
  * @param array array to group. 
@@ -86,7 +108,7 @@ export function Group<T>(array:T[] = [], grouping:Predicate<T>):T[][] {
  * @param sorters array of sorting predicates. 
  * @returns sorted array 
  */
-export function Sorts<T>(array:T[] = [], sorters:Sorter<T>[] = []):T[] { 
+export function Sorts<T>(array:T[] = [], sorters:Comparator<T>[] = []):T[] { 
   let sorted = [...array]; 
   if(IsEmpty(sorters)) 
     return sorted; 
@@ -96,13 +118,14 @@ export function Sorts<T>(array:T[] = [], sorters:Sorter<T>[] = []):T[] {
 } 
 
 
+
 /** SORT ====================
  * Quick sort an array
  * @param array array to sort. 
  * @param sorter sorting predicate. 
  * @returns sorted array. 
  */
-export function Sort<T>(array:T[] = [], sorter:Sorter<T>):T[] { 
+export function Sort<T>(array:T[] = [], sorter:Comparator<T>):T[] { 
   const [pivot, ...remainder] = [...array]; 
   if(IsEmpty(remainder)) 
     return pivot ? [pivot]:[]; 
@@ -111,6 +134,7 @@ export function Sort<T>(array:T[] = [], sorter:Sorter<T>):T[] {
   const right = Sort<T>(exclusion, sorter); 
   return [...left, pivot, ...right]; 
 } 
+
 
 
 /** FILTER ==================
@@ -130,6 +154,7 @@ export function Filter<T>(array:T[] = [], predicate:Predicate<T>):[T[], T[]] {
   ) 
   return [positive, negative]; 
 } 
+
 
 
 /** CONCATENATE ===================

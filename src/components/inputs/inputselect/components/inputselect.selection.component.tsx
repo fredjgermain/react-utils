@@ -26,11 +26,11 @@ export function DisplaySelection() {
   const [single] = selection; 
 
   if(context.multiple)
-    return <span className={className}> 
+    return <div className={className}> 
       <AbbrevArray {...{toAbbrev, maxLength:13}} />
       {IsEmpty(toAbbrev) && context.placeholder} 
-    </span> 
-  return <span className={className}> 
+    </div> 
+  return <div className={className}> 
     {single ?? context.placeholder} 
-  </span> 
+  </div> 
 } 

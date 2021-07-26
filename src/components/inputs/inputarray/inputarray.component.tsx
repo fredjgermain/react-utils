@@ -1,8 +1,9 @@
 import React, {useContext, useState, useEffect} from 'react'; 
 
 // --------------------------------------------------------
-import { IInput, Input } from '../input/input.component'; 
-import { useInputArray, IUseInputArray } from './inputarray.hook'; 
+import { IInput, Input } from '../input/_input'; 
+import { PrepArgs, IUseInputArray } from './inputarray.utils'; 
+//import { useInputArray, IUseInputArray } from './inputarray.hook'; 
 
 /*
 import { GetDefaultValueByType, GetTypeByValue, IsNull } from '../../../utils/value_type.utils'; 
@@ -13,7 +14,7 @@ import { DefaultWidth, IEvent, GetValueFromInput, OnEnter, GetInputType } from '
 
 const InputArrayContext = React.createContext({} as IUseInputArray); 
 export function InputArray({...props}:IInput) { 
-  const context = useInputArray(props); 
+  const context = PrepArgs(props); 
 
   return <InputArrayContext.Provider value={context} > 
     {context.value.map( (e,i) => { 
@@ -36,7 +37,7 @@ function CreateElement() {
   elementArgs.onPressTab = () => {} 
   elementArgs.onPressEnter = () => { 
     Create(value); 
-    setValue((elementArgs.type as IType).defaultValue); // reset input to defaultValue after creation. 
+    setValue(elementArgs.defaultValue); // reset input to defaultValue after creation. 
   }; 
   
   return <Input {...elementArgs} /> 
