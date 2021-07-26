@@ -1,4 +1,4 @@
-import { Group, Predicate, Filter } from '../../utils'; 
+import { Group, Predicate } from '../../utils'; 
 
 export function Paging<T>(ts:T[], pageBreak:Predicate<T>|number):T[][] { 
   const _pageBreak = PagingPredicate(pageBreak); 
@@ -24,24 +24,3 @@ export function AbbrevIndexes(index:number, indexes:number[]) {
   }); 
   return abbrev; 
 } 
-
-
-// export function AbbrevIndexes(index:number, indexes:number[]) { 
-//   const window = IndexesWindow(index, 0, indexes.length-1, 5); 
-//   const [abbrev] = Filter(indexes, (i:number) => { 
-//     const t = Math.floor(indexes.length/5); 
-//     return [0, ...window, indexes.length-1].includes(i) || (i % t) === 0; 
-//   }) 
-//   return abbrev; 
-// }
-
-// function IndexesWindow(index:number, min:number, max:number, length:number) { 
-//   const window = []; 
-//   let i = index-2; 
-//   i = Math.min(i, max-length); 
-//   i = Math.max(i, min); 
-//   while(window.length < length && i >=min && i<max) { 
-//     window.push(i++); 
-//   } 
-//   return window; 
-// } 
