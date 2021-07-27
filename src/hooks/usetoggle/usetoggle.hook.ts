@@ -1,17 +1,17 @@
 import {useRef, useState} from 'react';
 
 
-export interface IUseToggle<T> { 
+export interface IUseToggle<T extends HTMLElement> { 
   toggle:boolean, 
   Toggle: (toggle?:boolean) => void, 
   ToggleBtnAction: () => any, 
   toggleTarget:React.RefObject<T>; 
-}
+} 
 export function useToggle<T extends HTMLElement>(initToggle:boolean, OnToggle?:(toggle:boolean)=>void):IUseToggle<T> { 
   //<T extends HTMLElement>
   const [toggle, setToggle] = useState(initToggle); 
   const toggleTarget = useRef<T>(null); 
-
+  
   const Toggle = (toggle?:boolean) => setToggle((prev:boolean) => { 
     const isToggle = toggle ?? !prev; 
     OnToggle && OnToggle(isToggle); 
