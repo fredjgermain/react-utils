@@ -1,5 +1,19 @@
-import React, {useContext} from 'react'; 
+import React, { useContext } from 'react'; 
 
+
+export const TableContext = React.createContext({} as {tableContext:any}) 
+interface ITable { 
+  Key:React.Key, 
+  tableAttribute?:HTMLTableElement, 
+  tableContext:any, 
+}
+export function Table({Key, tableAttribute, tableContext, children}: React.PropsWithChildren<ITable>) { 
+  return <TableContext.Provider value={{tableContext}}> 
+    <table {...{key:Key, ...tableAttribute}}> 
+      {children} 
+    </table> 
+  </TableContext.Provider> 
+} 
 
 
 export const RowsContext = React.createContext({} as {rows:string[]}) 

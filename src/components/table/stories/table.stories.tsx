@@ -1,14 +1,17 @@
-import React, { useContext } from 'react'; 
+import React, { useState, useContext } from 'react'; 
 import { Story } from '@storybook/react'; 
 
+
+// --------------------------------------------------------
 import { 
+  Table, TableContext, 
   Cols, ColContext, Rows, RowContext, 
-  THeads, THeadContext, 
  } from '../_table'; 
 
-
+import '../table.css'; 
 //import { useFilter, useSorter } from '../../_inputs'; 
 import { usePager, PagerBtns, PageOfPages } from '../../../pager'; 
+import { IsEmpty } from '../../../utils'; 
 
 
 export default { 
@@ -28,56 +31,50 @@ function usePrepTable(entries:Item[]) {
 } 
 
 
+
+export const DataContext = React.createContext({} as {data:any[], cols:string[]}); 
 function MockInlineTable({datas, cols}:{datas:Item[], cols:string[]}) { 
   const {rows, paging} = usePrepTable(datas); 
 
-  function Read({row,col}:{row:string, col:string}) { 
-    return <span>row: {row} - col: {col}</span>
-  }
-
-  const GetCellArgs = () => { 
-    const {row} = useContext(RowContext); 
-    const {col} = useContext(ColContext); 
-    const entry = paging.page[row]; 
-
-    const value = entry ? entry[col]: ''; 
-    const editValue = (newValue:any) => {return;}
-
-    // const ifield:IField = {accessor:col, defaultValue:'', label:'', type:{}} 
-    // const options = [] as IOption[]; 
-    //return {value, editValue, ifield, options} 
-  }
-
-  /*const GetHeadArgs = () => { 
-    const {col} = useContext(THeadContext); 
-    const ifield:IField = {accessor:col, defaultValue:'', label:col, type:'string'} 
-    return {ifield}; 
-  }*/
-
-  // <THeads {...{cols}} ><THeadCell {...{GetHeadArgs}}/></THeads> 
   return <div> 
-    <table> 
+    <Table {...{Key:paging.pageIndex, tableContext:{data:paging.page, cols} }} > 
       <thead><tr> 
-        
+          <Cols {...{cols}} ><THeadCell /></Cols> 
       </tr></thead> 
       <tbody> 
-      <Rows {...{rows}}> 
-        <Cols {...{cols}} > 
-          <Cell {...{Read}} /> 
-        </Cols> 
-      </Rows> 
+        <Rows {...{rows}}> 
+          <Cols {...{cols}} ><Cell /></Cols> 
+        </Rows> 
       </tbody> 
-    </table> 
+    </Table> 
     <PagerBtns {...paging} /> 
   </div> 
 } 
 
 
-function Cell({...props}:{Read:(row, col) => JSX.Element}) { 
+function THeadCell() { 
+  const {col} = useContext(ColContext); 
+  const {tableContext} = useContext(TableContext); 
+
+  const label = tableContext?.cols.find( c => c === col ) ?? []; 
+
+  return <span> 
+    [{label}] 
+  </span> 
+} 
+
+function Cell() { 
   const {row} = useContext(RowContext); 
   const {col} = useContext(ColContext); 
-  return <props.Read {...{row, col}} /> 
-}
+  
+  const {tableContext:{data}} = useContext(TableContext); 
+
+  const [value, setValue] = useState( !IsEmpty(data[row]) ? data[row][col] : null ); 
+
+  return <span> 
+    [{row} {col}] : {value} 
+  </span> 
+} 
 
 
 function TemplateComponent({datas, cols, defaultItem}:{datas:Item[], cols:string[], defaultItem:Item}) { 
