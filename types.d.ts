@@ -45,22 +45,27 @@ interface IOption {
 /** IFIELD
  * 
  */
-interface IField {
-  name: string; 
+interface IField { 
+  accessor: string; 
   type: IType; 
 
   label: string; 
   ref?: string; 
   options?: any; 
-  abbrev: boolean; 
+
+  abbrev?: boolean; 
+
+  // validators ? 
+
+  // format ? 
+
   // required?: boolean; 
   // unique?: boolean; 
   // regex: string ?? 
   // format: string ?? 
   // validators: any[];
   // abbrev: 
-  
-}
+} 
 
 
 /** IMODEL
@@ -71,6 +76,8 @@ interface IModel {
   label:string[], 
   description:string[], 
   fields:IField[], 
+
+  // abbrev:string, // ? 
 } 
 
 

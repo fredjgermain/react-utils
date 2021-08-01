@@ -16,7 +16,7 @@ import { IsEmpty } from '../../../utils';
 
 
 export default { 
-  title: 'Table/statictable', 
+  title: 'Table/crudtable', 
   component: TemplateComponent, 
 } 
 
@@ -25,6 +25,7 @@ function THeadCell() {
   const {col} = useContext(ColContext); 
   const {tableContext} = useContext(TableContext); 
   const label = tableContext?.cols.find( c => c === col ) ?? []; 
+  
   return <span>[{label}]</span> 
 } 
 
@@ -34,7 +35,15 @@ function Cell() {
   const {col} = useContext(ColContext); 
   const {tableContext:{data}} = useContext(TableContext); 
   const [value, setValue] = useState( !IsEmpty(data[row]) ? data[row][col] : null ); 
+  
   return <span>[{row} {col}] : {value}</span> 
+} 
+
+
+function BtnCell() { 
+  const {row} = useContext(RowContext); 
+
+  return <td>[{row}, BTN]</td> 
 } 
 
 
@@ -42,15 +51,18 @@ function MockTable({datas, cols}:{datas:Item[], cols:string[]}) {
   // Prep table 
   const paging = usePager(datas, 10); 
   const rows = Object.keys(paging.page); 
+  const _cols = [...cols, 'BTN']; 
 
   return <div> 
     <Table {...{Key:paging.pageIndex, tableContext:{data:paging.page, cols} }} > 
       <thead><tr> 
-          <Cols {...{cols}} ><THeadCell /></Cols> 
+        <Cols {...{cols}} ><THeadCell /></Cols> 
+        <td>BTN</td> 
       </tr></thead> 
       <tbody> 
         <Rows {...{rows}}> 
           <Cols {...{cols}} ><Cell /></Cols> 
+          <BtnCell/> 
         </Rows> 
       </tbody> 
     </Table> 
