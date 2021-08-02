@@ -1,6 +1,8 @@
 export { ToArray, Filter, Sort, Sorts, Group, Order, Unic, IndexArray, Pick, Concatenate } from './utils/arrays.utils'; 
 export type { Indexed, Predicate, Comparator } from './utils/arrays.utils'; 
 
+export { InterpolateString, ReduceToString, SplitWithRegex, StringifyEach } from './utils/string.utils'; 
+
 export { DaysPerMonth, IsLeapYear, IsToday, ParseDate } from './utils/date.utils'; 
 
 export { DefaultWidth, GetInputType, GetValueFromInput, 

@@ -3,6 +3,22 @@ import { IsEmpty } from './value_type.utils';
 
 
 
+export function InterpolateString(values:object, interpoler:string) { 
+  const splits = SplitWithRegex(interpoler, [ new RegExp(/\${[a-zA-Z0-9_]+}/) ] ) 
+
+  let interpolated = ""; 
+  splits.forEach( split => { 
+    if(IsEmpty(split[1])) 
+      interpolated += split[0]; 
+    else { 
+      const key = split[0].substring(2, split[0].length-1).trim(); 
+      interpolated += StringifyEach(values[key])[0] ?? ''; 
+    } 
+  }) 
+  return interpolated; 
+} 
+
+
 /** STRINGIFY ===================================
  * Takes a single value or an array of values and stringify each. 
  * If a value is already a string, it returns that string value unchanged. 
@@ -22,7 +38,7 @@ export function StringifyEach(values:any):string[] {
 
 /** REDUCETOSTRING ==============================
  * Takes a single value or an array of values and stringify each. 
- * If a value is already a string, it returns that string value unchanged. 
+ * If a value is already a string, it returns that string unchanged. 
  * Else it stringify using 'JSON.stringify' rather than 'ToString'. 
  * @param strArray 
  * @param delimiter 
